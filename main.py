@@ -5,7 +5,7 @@ import networkx as nx
 import scipy.io as sio 
 import os,sys
 import pickle
-import node2vec
+import walk
 
 def get_batch(arr,n_seqs,n_steps):
 #	arr = arr.reshape([-1])
@@ -198,7 +198,7 @@ if __name__ == '__main__':
 	print('Start Walking...\n **********')
 	for edge in G.edges():
 		G[edge[0]][edge[1]]['weight'] *= min(G.degree(edge[0]),G.degree(edge[1])) / max(G.degree(edge[0]),G.degree(edge[1]))
-	G_ = node2vec.Walk(G,False,0.25,0.25)
+	G_ = walk.Walk(G,False,0.25,0.25)
 	G_.preprocess_transition_probs()
 	corpus = G_.simulate_walks(FLAGS.node_num, FLAGS.path_length)
 	vocab = list(G.nodes())
